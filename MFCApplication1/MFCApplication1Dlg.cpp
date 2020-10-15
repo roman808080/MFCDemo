@@ -115,12 +115,12 @@ BOOL CMFCApplication1Dlg::OnInitDialog()
 
 	m_wndToolBar.ModifyStyle(NULL, TBSTYLE_LIST | TBBS_AUTOSIZE);
 
-	UINT nSecondButtonID;
-	UINT nSecondButtonStyle;
-	int iSecondButtonImage;
+	UINT nButtonID;
+	UINT nButtonStyle;
+	int iButtonImage;
 
-	m_wndToolBar.GetButtonInfo(kFirstToolbarButton, nSecondButtonID, nSecondButtonStyle, iSecondButtonImage);
-	m_wndToolBar.SetButtonInfo(kFirstToolbarButton, nSecondButtonID, TBBS_CHECKBOX | TBBS_AUTOSIZE | BTNS_SHOWTEXT, iSecondButtonImage);
+	m_wndToolBar.GetButtonInfo(kFirstToolbarButton, nButtonID, nButtonStyle, iButtonImage);
+	m_wndToolBar.SetButtonInfo(kFirstToolbarButton, nButtonID, TBBS_CHECKBOX | TBBS_AUTOSIZE | BTNS_SHOWTEXT, iButtonImage);
 
 	m_wndToolBar.SetButtonText(kFirstToolbarButton, TEXT("Mark Takeoff Complete"));
 

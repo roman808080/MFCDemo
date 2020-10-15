@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include "CustomToolBar.h"
 
 // CMFCApplication1Dlg dialog
 class CMFCApplication1Dlg : public CDialogEx
@@ -26,7 +26,7 @@ protected:
 	HICON m_hIcon;
 
 	// My toolbar
-	CToolBar m_wndToolBar;
+	CustomToolBar m_wndToolBar;
 	BOOL butD;
 
 	// Generated message map functions
