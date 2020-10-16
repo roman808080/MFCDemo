@@ -5,6 +5,13 @@
 #pragma once
 #include "CustomToolBar.h"
 
+class IToolbarListener
+{
+public:
+	virtual void ChosenDirectory() = 0;
+	virtual ~IToolbarListener() {}
+};
+
 // CMFCApplicationDlg dialog
 class CMFCApplicationDlg : public CDialogEx
 {

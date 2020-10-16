@@ -12,6 +12,6 @@ public:
     afx_msg void OnNMClick(NMHDR* pNMHDR, LRESULT* pResult);
 
 private:
-    bool bActive;
+    bool m_bActive;
 };
 

@@ -14,7 +14,7 @@ namespace
 
 
 CustomToolBar::CustomToolBar()
-	: bActive(false)
+	: m_bActive(false)
 {}
 
 void CustomToolBar::InitElements()
@@ -54,34 +54,35 @@ void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
 		return;
 	}
 
-	if (bActive)
+	if (m_bActive)
 	{
 		LoadBitmapW(MAKEINTRESOURCE(IDB_UNCHECKED));
-		bActive = false;
+		m_bActive = false;
 		return;
 	}
 
 	LoadBitmapW(MAKEINTRESOURCE(IDB_CHECKED));
-	bActive = true;
+	m_bActive = true;
 
-	IFileDialog* pfd;
-	HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd));
+	IFileDialog* pFileDirectory;
+
+	HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pFileDirectory));
 	if (!SUCCEEDED(hr))
 	{
 		return;
 	}
 
 	DWORD dwOptions = 0;
-	if (SUCCEEDED(pfd->GetOptions(&dwOptions)))
+	if (SUCCEEDED(pFileDirectory->GetOptions(&dwOptions)))
 	{
-		pfd->SetOptions(dwOptions | FOS_PICKFOLDERS | FOS_FORCEFILESYSTEM | FOS_PATHMUSTEXIST);
+		pFileDirectory->SetOptions(dwOptions | FOS_PICKFOLDERS | FOS_FORCEFILESYSTEM | FOS_PATHMUSTEXIST);
 	}
 
-	pfd->Show(NULL);
+	pFileDirectory->Show(NULL);
 	if (SUCCEEDED(hr))
 	{
 		// Delete window size, MRU and other saved data for testing initial case
-		pfd->ClearClientData();
-		pfd->Release();
+		pFileDirectory->ClearClientData();
+		pFileDirectory->Release();
 	}
 }
