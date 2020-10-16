@@ -20,7 +20,7 @@ CustomToolBar::CustomToolBar()
 void CustomToolBar::InitElements()
 {
 	ModifyStyle(NULL, TBSTYLE_LIST | TBBS_AUTOSIZE);
-	bool result = LoadBitmapW(MAKEINTRESOURCE(IDB_BITMAP1));
+	bool result = LoadBitmapW(MAKEINTRESOURCE(IDB_UNCHECKED));
 	if (!result)
 	{
 		TRACE0("Failed to load the bitmap.\n");
@@ -54,14 +54,14 @@ void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 	if (bActive)
 	{
-		LoadBitmapW(MAKEINTRESOURCE(IDB_BITMAP1));
+		LoadBitmapW(MAKEINTRESOURCE(IDB_UNCHECKED));
 		bActive = false;
 
 		*pResult = 0;
 		return;
 	}
 
-	LoadBitmapW(MAKEINTRESOURCE(IDB_BITMAP2));
+	LoadBitmapW(MAKEINTRESOURCE(IDB_CHECKED));
 	bActive = true;
 	*pResult = 0;
 }

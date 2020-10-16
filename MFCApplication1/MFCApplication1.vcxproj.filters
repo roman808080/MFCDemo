@@ -68,10 +68,10 @@
     <Image Include="res\toolbar1.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\IDB_CHECKED.bmp">
+    <Image Include="res\bitmap1.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\IDB_UNCHECKED.bmp">
+    <Image Include="res\bitmap2.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

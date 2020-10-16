@@ -156,7 +156,7 @@ HCURSOR CMFCApplicationDlg::OnQueryDragIcon()
 void CMFCApplicationDlg::InitToolbar()
 {
 	if (!m_wndToolBar.Create(this, WS_CHILD | WS_VISIBLE | CBRS_TOP) ||
-		!m_wndToolBar.LoadToolBar(IDR_TOOLBAR1))
+		!m_wndToolBar.LoadToolBar(IDR_CUSTOM_TOOLBAR))
 	{
 		TRACE0("Failed to Create Dialog Toolbar\n");
 		EndDialog(IDCANCEL);

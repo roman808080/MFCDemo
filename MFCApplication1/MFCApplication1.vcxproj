@@ -210,8 +210,8 @@
     <None Include="res\MFCApplication1.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\IDB_CHECKED.bmp" />
-    <Image Include="res\IDB_UNCHECKED.bmp" />
+    <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\bitmap2.bmp" />
     <Image Include="res\MFCApplication1.ico" />
     <Image Include="res\toolbar1.bmp" />
   </ItemGroup>
