@@ -92,6 +92,8 @@ CMFCApplicationDlg::CMFCApplicationDlg(CWnd* pParent /*=nullptr*/)
 void CMFCApplicationDlg::ChosenDirectory(LPWSTR directoryPath)
 {
 	int filesAmount = GetFilesCount(directoryPath);
+	CWnd *label = GetDlgItem(IDC_STATIC_FILES_AMOUNT);
+	label->SetWindowText(TEXT("Test text."));
 }
 
 void CMFCApplicationDlg::DoDataExchange(CDataExchange* pDX)
