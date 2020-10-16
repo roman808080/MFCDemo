@@ -12,12 +12,6 @@
 #define new DEBUG_NEW
 #endif
 
-namespace
-{
-	const int kToolbarButton = 0;
-}
-
-
 // CAboutDlg dialog used for App About
 
 class CAboutDlg : public CDialogEx
@@ -105,73 +99,7 @@ BOOL CMFCApplicationDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
-
-	if (!m_wndToolBar.Create(this, WS_CHILD | WS_VISIBLE | CBRS_TOP) ||
-		!m_wndToolBar.LoadToolBar(IDR_TOOLBAR1))
-	{
-		TRACE0("Failed to Create Dialog Toolbar\n");
-		EndDialog(IDCANCEL);
-	}
-
-	m_wndToolBar.ModifyStyle(NULL, TBSTYLE_LIST | TBBS_AUTOSIZE);
-	bool result = m_wndToolBar.LoadBitmapW(MAKEINTRESOURCE(IDB_BITMAP1));
-	if (!result)
-	{
-		TRACE0("Failed to load the bitmap.\n");
-	}
-
-	UINT nButtonID;
-	UINT nButtonStyle;
-	int iButtonImage;
-
-	m_wndToolBar.GetButtonInfo(kToolbarButton, nButtonID, nButtonStyle, iButtonImage);
-	m_wndToolBar.SetButtonInfo(kToolbarButton, nButtonID, TBBS_CHECKBOX | TBBS_AUTOSIZE | BTNS_SHOWTEXT, iButtonImage);
-
-	m_wndToolBar.SetButtonText(kToolbarButton, TEXT("Mark Takeoff Complete"));
-
-	butD = TRUE;
-	CRect rcClientOld; // Old Client Rect
-	CRect rcClientNew; // New Client Rect with Tollbar Added
-
-	// Retrive the Old Client WindowSize
-	// Called to reposition and resize control bars in the client area of a window
-	// The reposQuery FLAG does not really traw the Toolbar. It only does the calculations.
-	// And puts the new ClientRect values in rcClientNew so we can do the rest of the Math.
-
-	GetClientRect(rcClientOld);
-	RepositionBars(AFX_IDW_CONTROLBAR_FIRST, AFX_IDW_CONTROLBAR_LAST, 0, reposQuery, rcClientNew);
-	// All of the Child Windows (Controls) now need to be moved so the Tollbar does not cover them up.
-	// Offest to move all child controls after adding Tollbar 
-	CPoint ptOffset(rcClientNew.left - rcClientOld.left, rcClientNew.top - rcClientOld.top);
-
-	CRect rcChild;
-	CWnd* pwndChild = GetWindow(GW_CHILD); //Handle to the Dialog Controls
-
-	while (pwndChild) // Cycle through all child controls 
-	{
-		pwndChild->GetWindowRect(rcChild); // Get the child control RECT
-		ScreenToClient(rcChild);
-
-		// Changes the Child Rect by the values of the claculated offset
-		rcChild.OffsetRect(ptOffset);
-		pwndChild->MoveWindow(rcChild, FALSE); // Move the Child Control
-		pwndChild = pwndChild->GetNextWindow();
-	}
-
-	CRect rcWindow;
-	// Get the RECT of the Dialog
-	GetWindowRect(rcWindow);
-
-	// Increase width to new Client Width
-	rcWindow.right += rcClientOld.Width() - rcClientNew.Width();
-
-	// Increase height to new Client Height
-	rcWindow.bottom += rcClientOld.Height() - rcClientNew.Height();
-	// Redraw Window
-	MoveWindow(rcWindow, FALSE);
-
-	// Now we REALLY Redraw the Toolbar
-	RepositionBars(AFX_IDW_CONTROLBAR_FIRST, AFX_IDW_CONTROLBAR_LAST, 0);
+	InitToolbar();
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -225,3 +153,58 @@ HCURSOR CMFCApplicationDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+void CMFCApplicationDlg::InitToolbar()
+{
+	if (!m_wndToolBar.Create(this, WS_CHILD | WS_VISIBLE | CBRS_TOP) ||
+		!m_wndToolBar.LoadToolBar(IDR_TOOLBAR1))
+	{
+		TRACE0("Failed to Create Dialog Toolbar\n");
+		EndDialog(IDCANCEL);
+	}
+
+	m_wndToolBar.InitElements();
+
+	butD = TRUE;
+	CRect rcClientOld; // Old Client Rect
+	CRect rcClientNew; // New Client Rect with Tollbar Added
+
+	// Retrive the Old Client WindowSize
+	// Called to reposition and resize control bars in the client area of a window
+	// The reposQuery FLAG does not really traw the Toolbar. It only does the calculations.
+	// And puts the new ClientRect values in rcClientNew so we can do the rest of the Math.
+
+	GetClientRect(rcClientOld);
+	RepositionBars(AFX_IDW_CONTROLBAR_FIRST, AFX_IDW_CONTROLBAR_LAST, 0, reposQuery, rcClientNew);
+	// All of the Child Windows (Controls) now need to be moved so the Tollbar does not cover them up.
+	// Offest to move all child controls after adding Tollbar 
+	CPoint ptOffset(rcClientNew.left - rcClientOld.left, rcClientNew.top - rcClientOld.top);
+
+	CRect rcChild;
+	CWnd* pwndChild = GetWindow(GW_CHILD); //Handle to the Dialog Controls
+
+	while (pwndChild) // Cycle through all child controls 
+	{
+		pwndChild->GetWindowRect(rcChild); // Get the child control RECT
+		ScreenToClient(rcChild);
+
+		// Changes the Child Rect by the values of the claculated offset
+		rcChild.OffsetRect(ptOffset);
+		pwndChild->MoveWindow(rcChild, FALSE); // Move the Child Control
+		pwndChild = pwndChild->GetNextWindow();
+	}
+
+	CRect rcWindow;
+	// Get the RECT of the Dialog
+	GetWindowRect(rcWindow);
+
+	// Increase width to new Client Width
+	rcWindow.right += rcClientOld.Width() - rcClientNew.Width();
+
+	// Increase height to new Client Height
+	rcWindow.bottom += rcClientOld.Height() - rcClientNew.Height();
+	// Redraw Window
+	MoveWindow(rcWindow, FALSE);
+
+	// Now we REALLY Redraw the Toolbar
+	RepositionBars(AFX_IDW_CONTROLBAR_FIRST, AFX_IDW_CONTROLBAR_LAST, 0);
+}

@@ -7,6 +7,35 @@ BEGIN_MESSAGE_MAP(CustomToolBar, CToolBar)
 END_MESSAGE_MAP()
 
 
+namespace
+{
+	const int kToolbarButton = 0;
+}
+
+
+CustomToolBar::CustomToolBar()
+	: bActive(false)
+{}
+
+void CustomToolBar::InitElements()
+{
+	ModifyStyle(NULL, TBSTYLE_LIST | TBBS_AUTOSIZE);
+	bool result = LoadBitmapW(MAKEINTRESOURCE(IDB_BITMAP1));
+	if (!result)
+	{
+		TRACE0("Failed to load the bitmap.\n");
+	}
+
+	UINT nButtonID;
+	UINT nButtonStyle;
+	int iButtonImage;
+
+	GetButtonInfo(kToolbarButton, nButtonID, nButtonStyle, iButtonImage);
+	SetButtonInfo(kToolbarButton, nButtonID, TBBS_CHECKBOX | TBBS_AUTOSIZE | BTNS_SHOWTEXT, iButtonImage);
+
+	SetButtonText(kToolbarButton, TEXT("Mark Takeoff Complete"));
+}
+
 void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMCLICK pNMClick = reinterpret_cast<LPNMCLICK>(pNMHDR);
