@@ -4,17 +4,13 @@
 
 #include "pch.h"
 #include "framework.h"
-#include "MFCApplication1.h"
-#include "MFCApplication1Dlg.h"
+#include "MFCApplication.h"
+#include "MFCApplicationDlg.h"
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
-#define OBM_CHECKBOXES 32759
-
-#include "windows.h"
 
 namespace
 {
@@ -59,18 +55,18 @@ END_MESSAGE_MAP()
 
 
 
-CMFCApplication1Dlg::CMFCApplication1Dlg(CWnd* pParent /*=nullptr*/)
+CMFCApplicationDlg::CMFCApplicationDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MFCAPPLICATION1_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void CMFCApplication1Dlg::DoDataExchange(CDataExchange* pDX)
+void CMFCApplicationDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 }
 
-BEGIN_MESSAGE_MAP(CMFCApplication1Dlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CMFCApplicationDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
@@ -79,7 +75,7 @@ END_MESSAGE_MAP()
 
 // CMFCApplication1Dlg message handlers
 
-BOOL CMFCApplication1Dlg::OnInitDialog()
+BOOL CMFCApplicationDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
@@ -180,7 +176,7 @@ BOOL CMFCApplication1Dlg::OnInitDialog()
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
-void CMFCApplication1Dlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CMFCApplicationDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -197,7 +193,7 @@ void CMFCApplication1Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CMFCApplication1Dlg::OnPaint()
+void CMFCApplicationDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -224,7 +220,7 @@ void CMFCApplication1Dlg::OnPaint()
 
 // The system calls this function to obtain the cursor to display while the user drags
 //  the minimized window.
-HCURSOR CMFCApplication1Dlg::OnQueryDragIcon()
+HCURSOR CMFCApplicationDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }

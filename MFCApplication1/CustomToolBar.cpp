@@ -17,22 +17,22 @@ void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 	GetButtonInfo(0, nButtonID, nButtonStyle, iButtonImage);
 
-	if (nButtonID == pNMClick->dwItemSpec)
+	if (nButtonID != pNMClick->dwItemSpec)
 	{
-		if (bActive)
-		{
-			LoadBitmapW(MAKEINTRESOURCE(IDB_BITMAP1));
-			bActive = false;
-		}
-		else
-		{
-			LoadBitmapW(MAKEINTRESOURCE(IDB_BITMAP2));
-			bActive = true;
-		}
-		
-		TRACE0("We are here.\n");
+		*pResult = 0;
+		return;
 	}
 
-	// TODO: Add your control notification handler code here
+	if (bActive)
+	{
+		LoadBitmapW(MAKEINTRESOURCE(IDB_BITMAP1));
+		bActive = false;
+
+		*pResult = 0;
+		return;
+	}
+
+	LoadBitmapW(MAKEINTRESOURCE(IDB_BITMAP2));
+	bActive = true;
 	*pResult = 0;
 }

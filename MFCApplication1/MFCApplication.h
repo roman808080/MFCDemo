@@ -11,14 +11,14 @@
 #include "resource.h"		// main symbols
 
 
-// CMFCApplication1App:
-// See MFCApplication1.cpp for the implementation of this class
+// CMFCApplicationApp:
+// See MFCApplication.cpp for the implementation of this class
 //
 
-class CMFCApplication1App : public CWinApp
+class CMFCApplicationApp : public CWinApp
 {
 public:
-	CMFCApplication1App();
+	CMFCApplicationApp();
 
 // Overrides
 public:
@@ -29,4 +29,4 @@ public:
 	DECLARE_MESSAGE_MAP()
 };
 
-extern CMFCApplication1App theApp;
+extern CMFCApplicationApp theApp;

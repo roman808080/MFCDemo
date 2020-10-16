@@ -1,16 +1,16 @@
 
-// MFCApplication1Dlg.h : header file
+// MFCApplicationDlg.h : header file
 //
 
 #pragma once
 #include "CustomToolBar.h"
 
-// CMFCApplication1Dlg dialog
-class CMFCApplication1Dlg : public CDialogEx
+// CMFCApplicationDlg dialog
+class CMFCApplicationDlg : public CDialogEx
 {
 // Construction
 public:
-	CMFCApplication1Dlg(CWnd* pParent = nullptr);	// standard constructor
+	CMFCApplicationDlg(CWnd* pParent = nullptr);	// standard constructor
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME

@@ -4,8 +4,8 @@
 
 #include "pch.h"
 #include "framework.h"
-#include "MFCApplication1.h"
-#include "MFCApplication1Dlg.h"
+#include "MFCApplication.h"
+#include "MFCApplicationDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -14,14 +14,14 @@
 
 // CMFCApplication1App
 
-BEGIN_MESSAGE_MAP(CMFCApplication1App, CWinApp)
+BEGIN_MESSAGE_MAP(CMFCApplicationApp, CWinApp)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 
 // CMFCApplication1App construction
 
-CMFCApplication1App::CMFCApplication1App()
+CMFCApplicationApp::CMFCApplicationApp()
 {
 	// support Restart Manager
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
@@ -33,12 +33,12 @@ CMFCApplication1App::CMFCApplication1App()
 
 // The one and only CMFCApplication1App object
 
-CMFCApplication1App theApp;
+CMFCApplicationApp theApp;
 
 
 // CMFCApplication1App initialization
 
-BOOL CMFCApplication1App::InitInstance()
+BOOL CMFCApplicationApp::InitInstance()
 {
 	// InitCommonControlsEx() is required on Windows XP if an application
 	// manifest specifies use of ComCtl32.dll version 6 or later to enable
@@ -71,7 +71,7 @@ BOOL CMFCApplication1App::InitInstance()
 	// such as the name of your company or organization
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
-	CMFCApplication1Dlg dlg;
+	CMFCApplicationDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)
