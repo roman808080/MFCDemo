@@ -15,6 +15,8 @@
 
 namespace
 {
+	const int kBufferSize = 1000;
+
 	int GetFilesCount(LPWSTR directoryPath)
 	{
 		WIN32_FIND_DATA fileData;
@@ -93,7 +95,11 @@ void CMFCApplicationDlg::ChosenDirectory(LPWSTR directoryPath)
 {
 	int filesAmount = GetFilesCount(directoryPath);
 	CWnd *label = GetDlgItem(IDC_STATIC_FILES_AMOUNT);
-	label->SetWindowText(TEXT("Test text."));
+
+	wchar_t text[kBufferSize];
+	swprintf(text, kBufferSize, TEXT("Files Amount: %i"), filesAmount);
+
+	label->SetWindowText(text);
 }
 
 void CMFCApplicationDlg::DoDataExchange(CDataExchange* pDX)
