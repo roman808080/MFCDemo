@@ -7,10 +7,46 @@
 #include "MFCApplication.h"
 #include "MFCApplicationDlg.h"
 #include "afxdialogex.h"
+#include <string>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+
+namespace
+{
+	int GetFilesCount(LPWSTR directoryPath)
+	{
+		WIN32_FIND_DATA fileData;
+		memset(&fileData, 0, sizeof(WIN32_FIND_DATA));
+
+
+		CString pattern = directoryPath;
+		pattern += "\\*";
+
+		HANDLE handle = FindFirstFile(pattern, &fileData);
+
+		int filesAmount = 0;
+
+		if (handle == INVALID_HANDLE_VALUE)
+		{
+			return filesAmount;
+		}
+
+		do
+		{
+			if (_tcscmp(fileData.cFileName, _T(".")) != 0 && // ignore "." and ".."
+				_tcscmp(fileData.cFileName, _T("..")) != 0)
+			{
+				++filesAmount;
+			}
+		} while (FindNextFile(handle, &fileData));
+
+		FindClose(handle);
+
+		return filesAmount;
+	}
+}
 
 // CAboutDlg dialog used for App About
 
@@ -55,6 +91,7 @@ CMFCApplicationDlg::CMFCApplicationDlg(CWnd* pParent /*=nullptr*/)
 
 void CMFCApplicationDlg::ChosenDirectory(LPWSTR directoryPath)
 {
+	int filesAmount = GetFilesCount(directoryPath);
 }
 
 void CMFCApplicationDlg::DoDataExchange(CDataExchange* pDX)
