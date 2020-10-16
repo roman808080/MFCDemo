@@ -12,9 +12,13 @@
 #define new DEBUG_NEW
 #endif
 
+#define OBM_CHECKBOXES 32759
+
+#include "windows.h"
+
 namespace
 {
-	const int kFirstToolbarButton = 0;
+	const int kToolbarButton = 0;
 }
 
 
@@ -114,15 +118,20 @@ BOOL CMFCApplication1Dlg::OnInitDialog()
 	}
 
 	m_wndToolBar.ModifyStyle(NULL, TBSTYLE_LIST | TBBS_AUTOSIZE);
+	bool result = m_wndToolBar.LoadBitmapW(MAKEINTRESOURCE(IDB_BITMAP1));
+	if (!result)
+	{
+		TRACE0("Failed to load the bitmap.\n");
+	}
 
 	UINT nButtonID;
 	UINT nButtonStyle;
 	int iButtonImage;
 
-	m_wndToolBar.GetButtonInfo(kFirstToolbarButton, nButtonID, nButtonStyle, iButtonImage);
-	m_wndToolBar.SetButtonInfo(kFirstToolbarButton, nButtonID, TBBS_CHECKBOX | TBBS_AUTOSIZE | BTNS_SHOWTEXT, iButtonImage);
+	m_wndToolBar.GetButtonInfo(kToolbarButton, nButtonID, nButtonStyle, iButtonImage);
+	m_wndToolBar.SetButtonInfo(kToolbarButton, nButtonID, TBBS_CHECKBOX | TBBS_AUTOSIZE | BTNS_SHOWTEXT, iButtonImage);
 
-	m_wndToolBar.SetButtonText(kFirstToolbarButton, TEXT("Mark Takeoff Complete"));
+	m_wndToolBar.SetButtonText(kToolbarButton, TEXT("Mark Takeoff Complete"));
 
 	butD = TRUE;
 	CRect rcClientOld; // Old Client Rect

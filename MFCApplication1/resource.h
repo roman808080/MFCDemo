@@ -8,14 +8,15 @@
 #define IDD_MFCAPPLICATION1_DIALOG      102
 #define IDR_MAINFRAME                   128
 #define IDR_TOOLBAR1                    129
+#define IDB_BITMAP1                     132
+#define IDB_BITMAP2                     133
 #define ID_BUTTON32774                  32774
-#define ID_BUTTON32780                  32780
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        132
+#define _APS_NEXT_RESOURCE_VALUE        134
 #define _APS_NEXT_COMMAND_VALUE         32781
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
