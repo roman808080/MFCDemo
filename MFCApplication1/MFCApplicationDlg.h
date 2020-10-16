@@ -9,6 +9,7 @@ class IToolbarListener
 {
 public:
 	virtual void ChosenDirectory(LPWSTR directoryPath) = 0;
+	virtual void ResetDirectory() = 0;
 	virtual ~IToolbarListener() {}
 };
 
@@ -20,6 +21,7 @@ public:
 	CMFCApplicationDlg(CWnd* pParent = nullptr);	// standard constructor
 
 	virtual void ChosenDirectory(LPWSTR directoryPath) override;
+	virtual void ResetDirectory() override;
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
@@ -47,4 +49,5 @@ protected:
 
 private:
 	void InitToolbar();
+	void SetFilesAmountToLabel(int filesAmount);
 };

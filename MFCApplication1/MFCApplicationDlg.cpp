@@ -94,12 +94,12 @@ CMFCApplicationDlg::CMFCApplicationDlg(CWnd* pParent /*=nullptr*/)
 void CMFCApplicationDlg::ChosenDirectory(LPWSTR directoryPath)
 {
 	int filesAmount = GetFilesCount(directoryPath);
-	CWnd *label = GetDlgItem(IDC_STATIC_FILES_AMOUNT);
+	SetFilesAmountToLabel(filesAmount);
+}
 
-	wchar_t text[kBufferSize];
-	swprintf(text, kBufferSize, TEXT("Files Amount: %i"), filesAmount);
-
-	label->SetWindowText(text);
+void CMFCApplicationDlg::ResetDirectory()
+{
+	SetFilesAmountToLabel(0);
 }
 
 void CMFCApplicationDlg::DoDataExchange(CDataExchange* pDX)
@@ -255,4 +255,14 @@ void CMFCApplicationDlg::InitToolbar()
 
 	// Now we REALLY Redraw the Toolbar
 	RepositionBars(AFX_IDW_CONTROLBAR_FIRST, AFX_IDW_CONTROLBAR_LAST, 0);
+}
+
+void CMFCApplicationDlg::SetFilesAmountToLabel(int filesAmount)
+{
+	CWnd* label = GetDlgItem(IDC_STATIC_FILES_AMOUNT);
+
+	wchar_t text[kBufferSize];
+	swprintf(text, kBufferSize, TEXT("Files Amount: %i"), filesAmount);
+
+	label->SetWindowText(text);
 }

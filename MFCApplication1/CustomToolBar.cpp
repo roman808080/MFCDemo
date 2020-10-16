@@ -84,7 +84,9 @@ void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
 	if (m_bActive)
 	{
 		LoadBitmapW(MAKEINTRESOURCE(IDB_UNCHECKED));
+		m_toolbarListener->ResetDirectory();
 		m_bActive = false;
+
 		return;
 	}
 
