@@ -38,17 +38,19 @@ void CustomToolBar::InitElements()
 
 void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
 {
+	// By default the result is ok.
+	*pResult = 0;
+
 	LPNMCLICK pNMClick = reinterpret_cast<LPNMCLICK>(pNMHDR);
 
 	UINT nButtonID;
 	UINT nButtonStyle;
 	int iButtonImage;
 
-	GetButtonInfo(0, nButtonID, nButtonStyle, iButtonImage);
+	GetButtonInfo(kToolbarButton, nButtonID, nButtonStyle, iButtonImage);
 
 	if (nButtonID != pNMClick->dwItemSpec)
 	{
-		*pResult = 0;
 		return;
 	}
 
@@ -56,8 +58,6 @@ void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		LoadBitmapW(MAKEINTRESOURCE(IDB_UNCHECKED));
 		bActive = false;
-
-		*pResult = 0;
 		return;
 	}
 
@@ -66,6 +66,10 @@ void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 	IFileDialog* pfd;
 	HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd));
+	if (!SUCCEEDED(hr))
+	{
+		return;
+	}
 
 	DWORD dwOptions = 0;
 	if (SUCCEEDED(pfd->GetOptions(&dwOptions)))
@@ -80,6 +84,4 @@ void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
 		pfd->ClearClientData();
 		pfd->Release();
 	}
-
-	*pResult = 0;
 }
