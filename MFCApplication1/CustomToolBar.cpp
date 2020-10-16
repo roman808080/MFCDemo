@@ -63,5 +63,23 @@ void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
 
 	LoadBitmapW(MAKEINTRESOURCE(IDB_CHECKED));
 	bActive = true;
+
+	IFileDialog* pfd;
+	HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd));
+
+	DWORD dwOptions = 0;
+	if (SUCCEEDED(pfd->GetOptions(&dwOptions)))
+	{
+		pfd->SetOptions(dwOptions | FOS_PICKFOLDERS | FOS_FORCEFILESYSTEM | FOS_PATHMUSTEXIST);
+	}
+
+	pfd->Show(NULL);
+	if (SUCCEEDED(hr))
+	{
+		// Delete window size, MRU and other saved data for testing initial case
+		pfd->ClearClientData();
+		pfd->Release();
+	}
+
 	*pResult = 0;
 }
