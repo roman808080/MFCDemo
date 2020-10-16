@@ -8,23 +8,25 @@
 class IToolbarListener
 {
 public:
-	virtual void ChosenDirectory() = 0;
+	virtual void ChosenDirectory(LPWSTR directoryPath) = 0;
 	virtual ~IToolbarListener() {}
 };
 
 // CMFCApplicationDlg dialog
-class CMFCApplicationDlg : public CDialogEx
+class CMFCApplicationDlg : public CDialogEx, public IToolbarListener
 {
 // Construction
 public:
 	CMFCApplicationDlg(CWnd* pParent = nullptr);	// standard constructor
+
+	virtual void ChosenDirectory(LPWSTR directoryPath) override;
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_MFCAPPLICATION1_DIALOG };
 #endif
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 
 

@@ -47,12 +47,14 @@ END_MESSAGE_MAP()
 
 // CMFCApplication1Dlg dialog
 
-
-
 CMFCApplicationDlg::CMFCApplicationDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MFCAPPLICATION1_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+}
+
+void CMFCApplicationDlg::ChosenDirectory(LPWSTR directoryPath)
+{
 }
 
 void CMFCApplicationDlg::DoDataExchange(CDataExchange* pDX)
@@ -163,6 +165,7 @@ void CMFCApplicationDlg::InitToolbar()
 	}
 
 	m_wndToolBar.InitElements();
+	m_wndToolBar.SetToolBarListener(this);
 
 	butD = TRUE;
 	CRect rcClientOld; // Old Client Rect

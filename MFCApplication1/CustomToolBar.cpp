@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CustomToolBar.h"
+#include "MFCApplicationDlg.h"
 #include "resource.h"
 
 BEGIN_MESSAGE_MAP(CustomToolBar, CToolBar)
@@ -10,8 +11,29 @@ END_MESSAGE_MAP()
 namespace
 {
 	const int kToolbarButton = 0;
-}
 
+	template <class T>
+	class ResourceGuard
+	{
+	public:
+		ResourceGuard(T* pResource)
+			: m_pResource(pResource)
+		{}
+
+		~ResourceGuard()
+		{
+			if (m_pResource == NULL)
+			{
+				return;
+			}
+
+			m_pResource->Release();
+		}
+
+	private:
+		T* m_pResource;
+	};
+}
 
 CustomToolBar::CustomToolBar()
 	: m_bActive(false)
@@ -34,6 +56,11 @@ void CustomToolBar::InitElements()
 	SetButtonInfo(kToolbarButton, nButtonID, TBBS_CHECKBOX | TBBS_AUTOSIZE | BTNS_SHOWTEXT, iButtonImage);
 
 	SetButtonText(kToolbarButton, TEXT("Mark Takeoff Complete"));
+}
+
+void CustomToolBar::SetToolBarListener(IToolbarListener* toolbarListener)
+{
+	m_toolbarListener = toolbarListener;
 }
 
 void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
@@ -64,7 +91,8 @@ void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
 	LoadBitmapW(MAKEINTRESOURCE(IDB_CHECKED));
 	m_bActive = true;
 
-	IFileDialog* pFileDirectory;
+	IFileDialog* pFileDirectory = NULL;
+	ResourceGuard<IFileDialog> fileDirectoryGuard(pFileDirectory);
 
 	HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pFileDirectory));
 	if (!SUCCEEDED(hr))
@@ -73,16 +101,38 @@ void CustomToolBar::OnNMClick(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 
 	DWORD dwOptions = 0;
-	if (SUCCEEDED(pFileDirectory->GetOptions(&dwOptions)))
+	hr = pFileDirectory->GetOptions(&dwOptions);
+	if (!SUCCEEDED(hr))
 	{
-		pFileDirectory->SetOptions(dwOptions | FOS_PICKFOLDERS | FOS_FORCEFILESYSTEM | FOS_PATHMUSTEXIST);
+		return;
+	}
+	pFileDirectory->SetOptions(dwOptions | FOS_PICKFOLDERS | FOS_FORCEFILESYSTEM | FOS_PATHMUSTEXIST);
+
+	hr = pFileDirectory->Show(NULL);
+	if (!SUCCEEDED(hr))
+	{
+		return;
 	}
 
-	pFileDirectory->Show(NULL);
-	if (SUCCEEDED(hr))
+	IShellItem* pShellItem = NULL;
+	ResourceGuard<IShellItem> shellItemGuard(pShellItem);
+
+	LPWSTR directoryPath = NULL;
+
+	hr = pFileDirectory->GetResult(&pShellItem);
+	if (!SUCCEEDED(hr))
 	{
-		// Delete window size, MRU and other saved data for testing initial case
-		pFileDirectory->ClearClientData();
-		pFileDirectory->Release();
+		return;
+	}
+
+	hr = pShellItem->GetDisplayName(SIGDN_FILESYSPATH, &directoryPath);
+	if (!SUCCEEDED(hr))
+	{
+		return;
+	}
+
+	if (m_toolbarListener != NULL)
+	{
+		m_toolbarListener->ChosenDirectory(directoryPath);
 	}
 }
